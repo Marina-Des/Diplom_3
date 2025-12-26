@@ -4,10 +4,15 @@ import allure
 from pages.base_page import BasePage
 from locators.feed_page_locators import FeedPageLocators
 from locators.header_locators import HeaderLocators
+from urls import Urls
 
 
 
 class FeedPage (BasePage):
+
+    @allure.step('Открываем страницу очереди заказов')
+    def open (self):
+        self.driver.get(Urls.order_feed_page_url)
 
     @allure.step('Берем значение счетчика заказов за все время')
     def get_orders_for_all_time_counter_value (self):

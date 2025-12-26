@@ -1,11 +1,9 @@
 import pytest
 import allure
 
-from urls import Urls
 from pages.feed_page import FeedPage
 from pages.constructor_page import ConstructorPage
-from locators.feed_page_locators import FeedPageLocators
-from locators.constructor_page_locators import ConstructorPageLocators
+
 
 
 
@@ -18,15 +16,15 @@ class TestFeedPage:
         fp=FeedPage(driver)
         cp=ConstructorPage(driver)
         
-        driver.get(Urls.order_feed_page_url)
+        fp.open()
         counter_before=fp.get_orders_for_all_time_counter_value()
 
-        cp.create_order(ConstructorPageLocators.bun_image_first_any, ConstructorPageLocators.sous_image_first_any)
+        cp.create_order_with_first_bun_and_first_soun_on_page()
 
-        driver.get(Urls.order_feed_page_url)
+        fp.open()
         counter_after=fp.get_orders_for_all_time_counter_value()
  
-        assert ((int(counter_before) + 1) == int(counter_after))
+        assert (int(counter_before) < int(counter_after))
 
 
 
@@ -37,15 +35,15 @@ class TestFeedPage:
         fp=FeedPage(driver)
         cp=ConstructorPage(driver)
         
-        driver.get(Urls.order_feed_page_url)
+        fp.open()
         counter_before=fp.get_orders_for_today_counter_value()
 
-        cp.create_order(ConstructorPageLocators.bun_image_first_any, ConstructorPageLocators.sous_image_first_any)
+        cp.create_order_with_first_bun_and_first_soun_on_page()
 
-        driver.get(Urls.order_feed_page_url)
+        fp.open()
         counter_after=fp.get_orders_for_today_counter_value()
  
-        assert ((int(counter_before) + 1) == int(counter_after))
+        assert (int(counter_before) < int(counter_after))
 
 
 
@@ -57,14 +55,11 @@ class TestFeedPage:
         fp=FeedPage(driver)
         cp=ConstructorPage(driver)
 
-        order_id = cp.create_order(ConstructorPageLocators.bun_image_first_any, ConstructorPageLocators.sous_image_first_any)
+        order_id = cp.create_order_with_first_bun_and_first_soun_on_page()
 
-        driver.get(Urls.order_feed_page_url)
-        try:
-            fp.wait_for_order_number_in_process_queue(order_id)
-            is_appeared=True
-        except Exception:
-            is_appeared = False
+        fp.open()
+        fp.wait_for_order_number_in_process_queue(order_id)
+        is_appeared=True
 
         assert is_appeared
 

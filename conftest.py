@@ -5,6 +5,7 @@ import random
 from selenium import webdriver
 from pages.login_page import LoginPage
 from pages.registration_page import RegistrationPage
+from helpers import GenerateData
 
 
 
@@ -30,7 +31,7 @@ def driver_create_register_login_quit (request):
         driver = webdriver.Firefox()
     rp = RegistrationPage(driver)
     lp = LoginPage(driver)
-    email = 'usver'+ str(int(random.random()*10000))+'@abvgd.edu'
+    email = GenerateData.generate_email_correct()
     rp.register('Имечко', email, '1234567890')
     lp.login(email, '1234567890')
     yield driver
