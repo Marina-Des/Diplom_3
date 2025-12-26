@@ -43,7 +43,7 @@ class ConstructorPage (BasePage):
 
     @allure.step("Получаем значение счетчика у первого соуса на странице")
     def get_first_sous_counter (self):
-        self.get_text_of_element(ConstructorPageLocators.sous_counter_first_any)
+        return self.get_text_of_element(ConstructorPageLocators.sous_counter_first_any)
 
     @allure.step("Скроллим до счетчика первого соуса на странице")
     def scroll_to_first_sous_counter (self):
